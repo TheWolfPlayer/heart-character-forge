@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d12">
+<title>HEART — Character Forge</title>
+<style>
+:root{color-scheme:dark;--bg:#100d12;--panel:#1a151d;--panel2:#211a24;--line:#453344;--ink:#eee5e9;--muted:#b5a5b0;--red:#c44d58;--red2:#8d303d;--gold:#d3ad72;--green:#8da98d;--shadow:0 18px 50px #0008}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#42212c 0,transparent 36%),linear-gradient(145deg,#100d12,#17111a 60%,#100d12);color:var(--ink);font:15px/1.55 Georgia,"Times New Roman",serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+header{padding:34px 22px 22px;text-align:center;border-bottom:1px solid var(--line);background:#0c090dbb}
+.kicker{color:var(--gold);text-transform:uppercase;letter-spacing:.28em;font:11px/1.4 Arial,sans-serif}
+h1{font-size:clamp(2rem,5vw,3.7rem);letter-spacing:.09em;margin:8px 0 0;text-shadow:0 3px 25px #a33a4c66}
+.subtitle{color:var(--muted);font-style:italic;margin:4px 0 0}
+.shell{max-width:1120px;margin:26px auto;padding:0 18px 60px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.tab{border:1px solid var(--line);background:#17121a;color:var(--muted);padding:12px 8px;text-transform:uppercase;letter-spacing:.12em;font: bold 11px Arial,sans-serif}
+.tab.active{background:linear-gradient(135deg,#642b37,#321d2a);color:#fff;border-color:#a95760}
+.panel{background:linear-gradient(160deg,#211a24f2,#17121af5);border:1px solid var(--line);box-shadow:var(--shadow);padding:clamp(18px,3vw,30px);min-height:420px}
+.section-title{font-size:1.55rem;margin:0 0 5px;color:#f2d9d5}.intro{color:var(--muted);margin:0 0 24px;font-style:italic}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}
+label{color:var(--gold);font:11px Arial,sans-serif;text-transform:uppercase;letter-spacing:.12em}
+input,select,textarea{width:100%;border:1px solid #594355;background:#100d13;color:var(--ink);padding:11px 12px;border-radius:2px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 2px #d3ad7222}
+textarea{min-height:90px;resize:vertical}
+.hint,.muted{color:var(--muted);font-size:.9rem}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:25px 0}
+h3{color:var(--gold);font-size:1.05rem;letter-spacing:.06em;margin:0 0 12px}
+.ability-card,.beat-card,.summary-card{border:1px solid var(--line);background:#130f16;padding:16px;margin:12px 0}
+.ability-card p{margin:7px 0 0;color:#c7b9c2;font-size:.92rem}
+.ability-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}
+.btn{border:1px solid #89505b;background:#49232e;color:#fff;padding:10px 16px;text-transform:uppercase;letter-spacing:.1em;font: bold 10px Arial,sans-serif}
+.btn:hover{background:#713442}.btn.secondary{background:#211a24;border-color:var(--line);color:var(--ink)}
+.btn.gold{background:#5b472a;border-color:#9d8050}
+.navrow{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.beat-card{display:grid;grid-template-columns:1fr 2fr;gap:12px}
+.beat-card .field:last-child{grid-column:1/-1}
+.review-head{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap}
+.pill{display:inline-block;color:var(--gold);border:1px solid #80674b;padding:3px 9px;font:10px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.review-item{padding:12px;background:#130f16;border:1px solid var(--line)}
+.review-item strong{display:block;color:var(--gold);font:10px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.review-item span{white-space:pre-wrap;overflow-wrap:anywhere}
+footer{text-align:center;color:#7e6d79;font:10px Arial,sans-serif;letter-spacing:.1em;margin-top:22px}
+@media(max-width:680px){.grid,.ability-grid,.review-grid{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,1fr)}.beat-card{grid-template-columns:1fr}.beat-card .field:last-child{grid-column:auto}}
+@media print{body{background:white;color:#111}.shell{max-width:none;margin:0;padding:0}.tabs,.actions,.navrow,header .kicker,footer{display:none!important}.panel,.ability-card,.beat-card,.summary-card,.review-item{background:white;color:#111;box-shadow:none;border:1px solid #aaa}.muted,.intro,.ability-card p{color:#333}header{background:white;color:#111;border:0;padding:10px}h1,.section-title,h3,label,.review-item strong{color:#5b1f2b}.panel{min-height:0}}
+</style>
+</head>
+<body>
+<header><div class="kicker">A character forge for</div><h1>HEART</h1><p class="subtitle">The City Beneath · Character Forge</p></header>
+<main class="shell">
+<nav class="tabs" aria-label="Character sections">
+<button class="tab active" data-tab="identity">01 · Identity</button><button class="tab" data-tab="class">02 · Class & abilities</button><button class="tab" data-tab="beats">03 · Beats</button><button class="tab" data-tab="review">04 · Review</button>
+</nav>
+<section class="panel" id="identity">
+<h2 class="section-title">Who descends?</h2><p class="intro">Every journey into the Heart begins with a name, a history, and a reason to keep going.</p>
+<div class="grid">
+<div class="field"><label for="characterName">Character name</label><input id="characterName" placeholder="Name your delver"></div>
+<div class="field"><label for="playerName">Player name</label><input id="playerName" placeholder="Your name"></div>
+<div class="field"><label for="ancestry">Ancestry</label><select id="ancestry"><option value="">Choose ancestry</option><option>Drow</option><option>Human</option><option>Aelfir</option><option>Gnoll</option><option>Other / homebrew</option></select></div>
+<div class="field"><label for="calling">Calling</label><select id="calling"><option value="">Choose calling</option><option>Adventure</option><option>Enlightenment</option><option>Forced</option><option>Heartsong</option><option>Penitent</option></select></div>
+<div class="field full"><label for="concept">Character concept</label><input id="concept" placeholder="A disgraced guide searching for a way home"></div>
+<div class="field full"><label for="background">Background / personal history</label><textarea id="background" placeholder="Where did they come from? What brought them to the City Beneath?"></textarea></div>
+</div><div class="navrow"><span></span><button class="btn" data-next="class">Continue to class →</button></div>
+</section>
+<section class="panel" id="class" hidden>
+<h2 class="section-title">Choose your path</h2><p class="intro">Your class shapes how you survive the impossible places below.</p>
+<div class="grid">
+<div class="field"><label for="className">Class</label><select id="className"><option value="">Choose class</option><option>Cleaver</option><option>Deadwalker</option><option>Deep Apiarist</option><option>Heretic</option><option>Hound</option><option>Incarnadine</option><option>Junk Mage</option><option>Vermissian Knight</option><option>Witch</option></select></div>
+<div class="field"><label>Core abilities</label><div id="coreAbilities" class="hint">Choose a class to see its core abilities.</div></div>
+</div>
+<div class="rule"></div>
+<div class="ability-grid">
+<div><h3>Major ability</h3><div class="field"><label for="majorAbility">Choose a major ability</label><select id="majorAbility" disabled><option value="">Choose a class first</option></select></div><div class="field" style="margin-top:10px"><label for="majorCustom">Or enter a custom / unlisted ability</label><input id="majorCustom" placeholder="Custom major ability"></div><div id="majorDesc" class="ability-card muted">Ability description will appear here.</div></div>
+<div><h3>Minor abilities</h3><div class="field"><label for="minor1">Minor ability 1</label><select id="minor1" disabled><option value="">Choose a class first</option></select></div><div id="minor1Desc" class="ability-card muted">Ability description will appear here.</div><div class="field"><label for="minor2">Minor ability 2</label><select id="minor2" disabled><option value="">Choose a class first</option></select></div><div id="minor2Desc" class="ability-card muted">Ability description will appear here.</div><div class="field"><label for="minorCustom">Or enter a custom / unlisted minor ability</label><input id="minorCustom" placeholder="Custom minor ability"></div></div>
+</div>
+<div class="hint">The dropdowns include named options available in this builder. Use the custom fields for abilities not listed or for homebrew choices.</div>
+<div class="navrow"><button class="btn secondary" data-prev="identity">← Back</button><button class="btn" data-next="beats">Continue to beats →</button></div>
+</section>
+<section class="panel" id="beats" hidden>
+<h2 class="section-title">The beats of your story</h2><p class="intro">Track the moments that change your character as the delve unfolds.</p>
+<div class="beat-card"><div class="field"><label for="beat1Tier">Beat 1 · Tier</label><select id="beat1Tier"><option value="">Choose tier</option><option>Minor</option><option>Major</option><option>Zenith</option></select></div><div class="field"><label for="beat1Title">Beat title</label><input id="beat1Title" placeholder="A turning point"></div><div class="field"><label for="beat1Notes">Notes</label><textarea id="beat1Notes" placeholder="What happened? What changed?"></textarea></div></div>
+<div class="beat-card"><div class="field"><label for="beat2Tier">Beat 2 · Tier</label><select id="beat2Tier"><option value="">Choose tier</option><option>Minor</option><option>Major</option><option>Zenith</option></select></div><div class="field"><label for="beat2Title">Beat title</label><input id="beat2Title" placeholder="Another turning point"></div><div class="field"><label for="beat2Notes">Notes</label><textarea id="beat2Notes" placeholder="What happened? What changed?"></textarea></div></div>
+<div class="navrow"><button class="btn secondary" data-prev="class">← Back</button><button class="btn" data-next="review">Review character →</button></div>
+</section>
+<section class="panel" id="review" hidden>
+<div class="review-head"><div><h2 class="section-title">Your delver, revealed</h2><p class="intro">Review your character before saving or sharing the record.</p></div><span class="pill">Heart · Character record</span></div>
+<div id="reviewContent"></div>
+<div class="actions"><button class="btn gold" id="saveBtn">Save in this browser</button><button class="btn secondary" id="loadBtn">Load saved character</button><button class="btn secondary" id="exportBtn">Export JSON</button><button class="btn secondary" id="printBtn">Print / Save PDF</button><button class="btn secondary" id="clearBtn">Clear form</button></div>
+<div class="navrow"><button class="btn secondary" data-prev="beats">← Back to beats</button><span></span></div>
+</section>
+<footer>DESCEND WITH PURPOSE · THE HEART REMEMBERS</footer>
+</main>
+<script>
+const abilityData={
+"Cleaver":{core:["HEARTSBLOOD","THE RED FEAST"],major:["THE WILD HUNT","EXTINCTION BOW","BLOODBOUND BEAST","CHIMERIC STRAIN","MONSTROUS APPETITE"],minor:["CALL OF THE WILD"]},
+"Deadwalker":{core:["BACK DOOR TO HEAVEN"],major:[],minor:["THE GRAIL ROAD","THE SLUMBERING DEPTHS","THE PALACE MULTIFACETED","THE MOON GARDEN","THE DARK CITY"]},
+"Deep Apiarist":{core:["At the start of every situation, clear all Mind stress. You cannot receive Mind protection or clear Mind stress by other means."],major:["ANNIHILATION"],minor:[]},
+"Heretic":{core:["Once per delve, perform a ceremony that removes Blood and Mind stress from allies."],major:["FULL MOON SHIELD"],minor:["GODDESSES THREE","MINE EYES HAVE SEEN THE GLORY"]},
+"Hound":{core:["IN THE THICK OF IT"],major:["UNSTOPPABLE","STARE DOWN"],minor:["CONDEMN","OUR GLORIOUS LADY"]},
+"Incarnadine":{core:["Resources traded at landmarks are more valuable. Upon death, you explode."],major:["CRAVE","KARMIC LEDGER","BACKSTAB","DEBTOR’S REDS"],minor:["ULTIMATE CREDIT","ULTIMATE DEBIT","ULTIMATE REWARD"]},
+"Junk Mage":{core:["At 4+ Mind stress, roll with mastery when using magic.","SACRIFICE: destroy Occult resources to gain protection on your next magical action."],major:[],minor:["SACRIFICE"]},
+"Vermissian Knight":{core:["VERMISSIAN PLATE"],major:["DRAGON KILLER","AETHERIC FIELD","ECHOING RAILS","GUARDIAN"],minor:["THE LAST TRAIN"]},
+"Witch":{core:["CRUCIBLE","TRUE FORM"],major:["GREAT AND TERRIBLE","THE OLD BLOOD","DIVINITY","DISTINGUISHED LINEAGE","EXSANGUINATE","ASCENDANCY","CRIMSON MIRROR","WILD-WITCH","FAMILIAR","LAIR","THE RED QUEEN","FINAL FORM","PERFECT RESURRECTION"],minor:[]}
+};
+const descriptions={
+"THE WILD HUNT":"Call on the hunt and pursue a chosen quarry through the strange reaches of the Heart.",
+"EXTINCTION BOW":"A terrible hunting implement suited to bringing down formidable prey.",
+"BLOODBOUND BEAST":"Form a powerful bond with a monstrous companion.",
+"CHIMERIC STRAIN":"Manifest an unstable mixture of bestial traits.",
+"MONSTROUS APPETITE":"Turn a monstrous hunger into a source of strength.",
+"CALL OF THE WILD":"Reach out to the wild things and call for aid.",
+"BACK DOOR TO HEAVEN":"A Deadwalker can find a route into the strange afterlives and hidden heavens.",
+"THE GRAIL ROAD":"A path leading toward the Grail Road, one of the heavens.",
+"THE SLUMBERING DEPTHS":"A path leading toward the Slumbering Depths.",
+"THE PALACE MULTIFACETED":"A path leading toward the Palace Multifaceted.",
+"THE MOON GARDEN":"A path leading toward the Moon Garden.",
+"THE DARK CITY":"A path leading toward the Dark City.",
+"ANNIHILATION":"Become an engine of un-creation whose touch burns away Heartblooded creatures.",
+"FULL MOON SHIELD":"Protect allies and see clearly in darkness.",
+"GODDESSES THREE":"A powerful, transcendent Heretic gift.",
+"MINE EYES HAVE SEEN THE GLORY":"A powerful, transcendent Heretic gift.",
+"UNSTOPPABLE":"Become tougher and more dangerous when hurt; shrug off certain setbacks.",
+"STARE DOWN":"Use an unwavering gaze to frighten an adversary.",
+"CONDEMN":"Gather evidence and name a target as a wanted criminal.",
+"OUR GLORIOUS LADY":"Gain access to the Religion domain and once per session heal another character.",
+"CRAVE":"A desire that gives your Incarnadine leverage in the economy of the Heart.",
+"KARMIC LEDGER":"Keep account of debts and consequences.",
+"BACKSTAB":"Exploit an opening when an enemy least expects it.",
+"DEBTOR’S REDS":"Call in the obligations and costs that bind others to you.",
+"ULTIMATE CREDIT":"A Zenith-level Incarnadine ability.",
+"ULTIMATE DEBIT":"A Zenith-level Incarnadine ability.",
+"ULTIMATE REWARD":"A Zenith-level Incarnadine ability.",
+"DRAGON KILLER":"A Vermissian Knight ability for confronting enormous threats.",
+"AETHERIC FIELD":"Project a protective or disruptive field of aetheric energy.",
+"ECHOING RAILS":"Draw on the strange routes and echoes of the Vermissian.",
+"GUARDIAN":"Stand between danger and those you have sworn to protect.",
+"THE LAST TRAIN":"A Zenith ability tied to the Vermissian's impossible journey.",
+"GREAT AND TERRIBLE":"Wield the frightening presence of old and potent witchcraft.",
+"THE OLD BLOOD":"Draw on the power carried in ancient blood.",
+"DIVINITY":"Reach toward a state of supernatural power.",
+"DISTINGUISHED LINEAGE":"Call upon the significance and influence of your lineage.",
+"EXSANGUINATE":"Use blood as a source of terrible witchcraft.",
+"ASCENDANCY":"Rise into a greater expression of your witchly power.",
+"CRIMSON MIRROR":"Turn a reflection into an instrument of witchcraft.",
+"WILD-WITCH":"Draw upon untamed, instinctive magic.",
+"FAMILIAR":"Form a bond with a familiar.",
+"LAIR":"Establish a place of power and refuge.",
+"THE RED QUEEN":"A potent expression of the Red Queen's power.",
+"FINAL FORM":"Reveal a culminating form of witchcraft.",
+"PERFECT RESURRECTION":"A Zenith-level power associated with return from death."
+};
+const $=id=>document.getElementById(id);
+let currentTab="identity";
+function showTab(tab){currentTab=tab;document.querySelectorAll(".panel").forEach(p=>p.hidden=p.id!==tab);document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));if(tab==="review")renderReview();window.scrollTo({top:0,behavior:"smooth"});}
+document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.next)));
+document.querySelectorAll("[data-prev]").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.prev)));
+function setOptions(id,items){const s=$(id);s.innerHTML='<option value="">Choose an ability</option>';items.forEach(a=>{const o=document.createElement("option");o.value=a;o.textContent=a;s.appendChild(o)});s.disabled=items.length===0;s.insertAdjacentHTML("beforeend",items.length?"":'<option value="" disabled>No named options listed — use custom field</option>');}
+function describe(selectId,boxId){const v=$(selectId).value;$(boxId).textContent=v?(descriptions[v]||"No short description is available in this builder. Use your game reference for the full ability text."): "Ability description will appear here.";}
+$("className").addEventListener("change",e=>{const d=abilityData[e.target.value];$("coreAbilities").innerHTML=d?d.core.map(x=>"<div class='ability-card'>"+escapeHtml(x)+"</div>").join(""):"Choose a class to see its core abilities.";setOptions("majorAbility",d?d.major:[]);setOptions("minor1",d?d.minor:[]);setOptions("minor2",d?d.minor:[]);["majorAbility","minor1","minor2"].forEach((s,i)=>describe(s,["majorDesc","minor1Desc","minor2Desc"][i]));});
+[["majorAbility","majorDesc"],["minor1","minor1Desc"],["minor2","minor2Desc"]].forEach(([s,d])=>$(s).addEventListener("change",()=>describe(s,d)));
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function val(id){return $(id).value.trim()}
+function chosen(id,custom){return val(custom)||val(id)||"—"}
+function collect(){return {characterName:val("characterName"),playerName:val("playerName"),ancestry:val("ancestry"),calling:val("calling"),concept:val("concept"),background:val("background"),className:val("className"),coreAbilities:$("coreAbilities").innerText,majorAbility:chosen("majorAbility","majorCustom"),minor1:chosen("minor1","minorCustom"),minor2:val("minor2"),beats:[{tier:val("beat1Tier"),title:val("beat1Title"),notes:val("beat1Notes")},{tier:val("beat2Tier"),title:val("beat2Title"),notes:val("beat2Notes")}]};}
+function item(label,value){return `<div class="review-item"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(value||"—")}</span></div>`}
+function renderReview(){const d=collect();$("reviewContent").innerHTML=`<div class="review-grid">${item("Character",d.characterName)}${item("Player",d.playerName)}${item("Ancestry",d.ancestry)}${item("Calling",d.calling)}${item("Concept",d.concept)}${item("Class",d.className)}${item("Major ability",d.majorAbility)}${item("Minor ability 1",d.minor1)}${item("Minor ability 2",d.minor2)}<div class="review-item" style="grid-column:1/-1"><strong>Core abilities</strong><span>${escapeHtml(d.coreAbilities)}</span></div>${item("Background",d.background)}</div><div class="rule"></div><h3>Beats</h3><div class="review-grid">${d.beats.map((b,i)=>`<div class="review-item"><strong>Beat ${i+1} · ${escapeHtml(b.tier||"Unassigned")}</strong><span>${escapeHtml(b.title||"Untitled")}\\n${escapeHtml(b.notes||"")}</span></div>`).join("")}</div>`;}
+$("saveBtn").addEventListener("click",()=>{localStorage.setItem("heartCharacterForge",JSON.stringify(collect()));alert("Character saved in this browser.");});
+$("loadBtn").addEventListener("click",()=>{const raw=localStorage.getItem("heartCharacterForge");if(!raw){alert("No saved character was found in this browser.");return;}loadData(JSON.parse(raw));alert("Saved character loaded.");});
+function loadData(d){["characterName","playerName","ancestry","calling","concept","background","majorCustom","minorCustom","beat1Tier","beat1Title","beat1Notes","beat2Tier","beat2Title","beat2Notes"].forEach(k=>{if($(k))$(k).value=d[k]||""});$("className").value=d.className||"";$("className").dispatchEvent(new Event("change"));const major=d.majorAbility||"";if($("majorAbility").querySelector(`option[value="${CSS.escape(major)}"]`))$("majorAbility").value=major;else $("majorCustom").value=major==="—"?"":major;const m1=d.minor1||"";if($("minor1").querySelector(`option[value="${CSS.escape(m1)}"]`))$("minor1").value=m1;else $("minorCustom").value=m1==="—"?"":m1;$("minor2").value=d.minor2==="—"?"":d.minor2;[["majorAbility","majorDesc"],["minor1","minor1Desc"],["minor2","minor2Desc"]].forEach(([s,b])=>describe(s,b));}
+$("exportBtn").addEventListener("click",()=>{const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="heart-character.json";a.click();URL.revokeObjectURL(a.href);});
+$("printBtn").addEventListener("click",()=>window.print());
+$("clearBtn").addEventListener("click",()=>{if(!confirm("Clear all character fields? This will not delete the saved browser copy."))return;document.querySelectorAll("input,textarea").forEach(x=>x.value="");document.querySelectorAll("select").forEach(x=>x.selectedIndex=0);$("className").dispatchEvent(new Event("change"));renderReview();});
+</script>
+</body></html>
